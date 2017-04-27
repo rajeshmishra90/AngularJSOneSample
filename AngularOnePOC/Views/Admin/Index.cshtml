@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div ng-controller="AdminCtrl">
+    <div class="row">
+        <div class="bs-example marginTop50" data-example-id="table-within-panel">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>Manage Products</h3>
+                    <button ng-click="AddProduct()">Add</button>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Price
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Discount (%)
+                            </th>
+                            <th>
+                                Rating (out of 5)
+                            </th>
+                            <th>
+                                Available?
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="products.length > 0">
+                        <tr ng-repeat="prod in products">
+                            <th scope="row">
+                                {{$index+1}}
+                            </th>
+                            <td>
+                                {{prod.Name}}
+                            </td>
+                            <td>
+                                {{prod.Price}}
+                            </td>
+                            <td>
+                                {{prod.Description}}
+                            </td>
+                            <td>
+                                {{prod.DiscountPercent}}
+                            </td>
+                            <td>
+                                {{prod.Rating}}
+                            </td>
+                            <td>
+                                {{prod.IsAvailable}}
+                            </td>
+                            <td>
+                                <span ng-click="EditProduct(prod)" class="glyphicon glyphicon-pencil"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-if="products.length == 0"><tr><th>No records to display</th></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 ng-if="!IsEditMode" class="modal-title" id="modal-title">Add Product</h3>
+        <h3 ng-if="IsEditMode" class="modal-title" id="modal-title">Edit Product</h3>
+    </div>
+    <form ng-submit="ok()">
+        <div class="modal-body" id="modal-body">
+
+            <div class="form-group">
+                <label for="formGroupExampleInput">Name</label>
+                <input type="text" required class="form-control" id="formGroupExampleInput" ng-model="product.Name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput2">Description</label>
+                <textarea required class="form-control" id="formGroupExampleInput2" ng-model="product.Description" placeholder="Description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput3">Price</label>
+                <input type="text" required class="form-control" id="formGroupExampleInput3" ng-model="product.Price" placeholder="Price">
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput4">Discount</label>
+                <input type="number" min="0" max="99.9" required class="form-control" id="formGroupExampleInput4" ng-model="product.DiscountPercent" placeholder="Discount">
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput5">Rating</label>
+                <input type="number" max="5" min="1" required class="form-control" id="formGroupExampleInput5" ng-model="product.Rating" placeholder="Rating">
+            </div>
+            <div class="form-group">
+                <label for="formGroupExampleInput6">Rating</label>
+                <input type="text" required class="form-control" id="formGroupExampleInput6" ng-model="product.ImagePath" placeholder="Product Image Url">
+            </div>
+            <div ng-if="IsEditMode" class="form-group">
+                <label for="formGroupExampleInput">IsAvailable</label>
+                <input type="checkbox" ng-model="product.IsAvailable" />
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="btn btn-primary" type="submit" value="OK" />
+            @*<button class="btn btn-primary" type="button" ng-click="ok()">OK</button>*@
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
+</script>

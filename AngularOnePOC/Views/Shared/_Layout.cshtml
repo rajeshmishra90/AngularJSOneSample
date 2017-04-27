@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Product Store</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div ng-app="myApp" class="container body-content ng-cloak">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Product Store</p>
+        </footer>
+    </div>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>*@
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/Services/productService.js"></script>
+    <script src="~/Scripts/Controller/SearchCtrl.js"></script>
+    <script src="~/Scripts/Controller/AdminCtrl.js"></script>
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

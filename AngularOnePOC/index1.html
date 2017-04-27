@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>index</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="Scripts/app.js"></script>
+</head>
+<body ng-app="myApp">
+    <div ng-controller="CustomerCtrl">
+        <form>
+            <div>
+                Name : <input ng-model="customerObj.Name" type="text" name="Name" value="" /><br/>
+                Age : <input ng-model="customerObj.Age" type="text" name="Age" value="" /><br/>
+                <input type="submit" ng-click="Submit()" name="submit" value="Submit" />
+            </div>
+        </form>
+        <div>
+            <label>{{Name}}</label><br/>
+            <label>{{Age}}</label>
+        </div>
+    </div>
+</body>
+</html>
