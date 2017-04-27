@@ -126,7 +126,7 @@ namespace AngularOnePOC.Controllers
                 IsAvailable = true,
                 Price = 3990,
                 Rating = 3,
-                ImagePath = "https://images.apple.com/au/pr/products/images/iPhone6_34FR_SpGry_iPhone6plus_34FL_SpGry_Homescreen_HERO.jpg*"
+                ImagePath = "https://images.apple.com/au/pr/products/images/iPhone6_34FR_SpGry_iPhone6plus_34FL_SpGry_Homescreen_HERO.jpg"
             };
             productList.Add(product2);
             var product3 = new Product()
@@ -135,7 +135,7 @@ namespace AngularOnePOC.Controllers
                 Name = "Men Formal Shoes",
                 Description = "Bata, liberty mochi Men Formal Shoes",
                 DiscountPercent = 5,
-                IsAvailable = true,
+                IsAvailable = false,
                 Price = 699,
                 Rating = 2,
                 ImagePath = "https://rukminim1.flixcart.com/image/312/312/shoe/h/q/q/black-wvf00002-vulcan-knight-8-original-imaemzsyu9rvghjy.jpeg?q=70"

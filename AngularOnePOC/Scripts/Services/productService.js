@@ -1,4 +1,6 @@
-﻿myApp.service('productService', function ($http, $q) {
+﻿myApp.service('productService', function ($http, $q, $route) {
+    var searchCriteria = null;
+
     function GetProducts() {
         var defer = $q.defer();
         var productData = [];
@@ -71,10 +73,30 @@
         return defer.promise;
     };
 
+    function GetProductDetails() {
+        var id = $route.current.params.id;
+        var defer = $q.defer();
+        $http({
+            method: 'GET',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: "/Product/Details/" + parseInt(id)
+        })
+        .then(function (response) {
+            defer.resolve(response.data);
+        }, function (error) {
+            defer.reject(error);
+            console.log(error);
+        });
+        return defer.promise;
+    };
+
     return {
         GetProducts: GetProducts,
         AddProduct: AddProduct,
         EditProduct: EditProduct,
-        SearchProducts: SearchProducts
+        SearchProducts: SearchProducts,
+        GetProductDetails: GetProductDetails,
+        productSearchCriteria: searchCriteria
     };
 });

@@ -2,32 +2,62 @@
     ViewBag.Title = "Search";
 }
 
-<div ng-controller="searchCtrl">
-    <div class="container jumbotron text-center">
-        <h2>Product Store</h2>
+<div ng-view></div>
+
+<script type="text/ng-template" id="search.results.html">
+    <div ng-controller="searchCtrl">
+        <div class="container jumbotron text-center">
+            <h2>Product Store</h2>
+            <div class="row">
+                <form ng-submit="SearchProduct()">
+                    <div class="col-md-6 col-md-offset-3 input-group">
+                        <input type="text" ng-model="SearchCriteria.Term" class="form-control" placeholder="Search" required>
+                        <label for="mySubmit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></label>
+                        <input hidden id="mySubmit" type="submit" value="Search" />
+                        <label for="checkid" style="word-wrap:break-word;" class="labelC">
+                            <input class="inputC" ng-model="SearchCriteria.OnlyAvailable" style="vertical-align:middle;" id="checkid" type="checkbox" />Exclude out of stock?
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="row">
-            <form ng-submit="SearchProduct()">
-                <div class="col-md-6 col-md-offset-3 input-group">
-                    <input type="text" ng-model="SearchCriteria.Term" class="form-control" placeholder="Search" required>
-                    <label for="mySubmit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></label>
-                    <input hidden id="mySubmit" type="submit" value="Search" />
-                    @*<button ng-click="SearchProduct()" class="btn btn-default" type="button">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>*@
-                </div>
-            </form>
+            <div class="col-md-3" ng-repeat="product in SearchProductList">
+                <img style="height:220px; width:180px;" ng-src="{{product.ImagePath}}" alt="{{product.Name}}" /><br />
+                <label><strong>{{product.Name}}</strong></label><br />
+                <label>{{"Rs. "+product.Price}}</label><label>{{" ("+product.DiscountPercent+"% OFF) "}}</label>
+                <p>{{product.Description}}</p>
+                <button ng-click="ViewProductDetails(product)" class="btn btn-group-sm">View Details</button>
+            </div>
+            <div class="container col-md-3 col-md-offset-3" ng-if="IsSeachCompleted && SearchProductList.length == 0">
+                <p>No products found. Try something else.</p>
+            </div>
         </div>
     </div>
-    <div class="row">
-        @*https://images.apple.com/au/pr/products/images/iPhone6_34FR_SpGry_iPhone6plus_34FL_SpGry_Homescreen_HERO.jpg*@
-        @*https://rukminim1.flixcart.com/image/312/312/shoe/h/q/q/black-wvf00002-vulcan-knight-8-original-imaemzsyu9rvghjy.jpeg?q=70*@
-        @*https://rukminim1.flixcart.com/image/312/312/backpack/f/u/d/bkpecobp4-gear-backpack-eco-backpack-4-navy-blue-green-original-imaehzgzhwahn36x.jpeg?q=70*@
-        <div class="col-md-3" ng-repeat="product in SearchProductList">
-            <img style="height:220px; width:180px;" src="{{product.ImagePath}}" alt="{{product.Name}}" /><br />
-            <label><strong>{{product.Name}}</strong></label><br />
-            <label>{{"Rs. "+product.Price}}</label><label>{{" ("+product.DiscountPercent+"% OFF) "}}</label>
-            <p>{{product.Description}}</p>
-            <button class="btn btn-group-sm">View Details</button>
-        </div>
-    </div>
-</div>
+    
+</script>
+
+<script type="text/ng-template" id="product.details.html">
+    <button ng-click="GoHome()" class="navbar-left btn btn-group-sm" type="button">Back</button><br/>
+    <h2> Product Details </h2>
+    {{productInfo.Name}}
+</script>
+<style>
+    .labelC {
+        display: block;
+        padding-left: 15px;
+        text-indent: -15px;
+        font-size: 12px;
+    }
+
+    .inputC {
+        width: 13px;
+        height: 13px;
+        padding: 0;
+        margin: 0;
+        vertical-align: bottom;
+        position: relative;
+        top: -1px;
+        *overflow: hidden;
+    }
+</style>
