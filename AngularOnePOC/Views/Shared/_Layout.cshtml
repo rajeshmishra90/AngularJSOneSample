@@ -17,19 +17,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a href="#!/home" class="navbar-brand">Product Store</a>
+                @*@Html.ActionLink("Product Store", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="#!/home">Home</a></li>
                     <li><a href="#!/Admin">Admin</a></li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li><a href="#!/About">About</a></li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
-    <div  class="container body-content ng-cloak">
+    <div class="container body-content ng-cloak">
         @RenderBody()
         <script type="text/ng-template" id="search.results.html">
             <div ng-controller="searchCtrl">
@@ -50,11 +51,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3" ng-repeat="product in SearchProductList">
-                        <img style="height:220px; width:180px;" ng-src="{{product.ImagePath}}" alt="{{product.Name}}" /><br />
+                        <productdetails ng-click="ViewProductDetails(product)" product="product" showbtn="false">View Product</productdetails>
+                        @*<img style="height:220px; width:180px;" ng-src="{{product.ImagePath}}" alt="{{product.Name}}" /><br />
                         <label><strong>{{product.Name}}</strong></label><br />
                         <label>{{"Rs. "+product.Price}}</label><label>{{" ("+product.DiscountPercent+"% OFF) "}}</label>
                         <p>{{product.Description}}</p>
-                        <button ng-click="ViewProductDetails(product)" class="btn btn-group-sm">View Details</button>
+                        <button ng-click="ViewProductDetails(product)" class="btn btn-group-sm">View Details</button>*@
                     </div>
                     <div class="container col-md-3 col-md-offset-3" ng-if="IsSeachCompleted && SearchProductList.length == 0">
                         <p>No products found. Try something else.</p>
@@ -68,12 +70,23 @@
             <br />
             <h2> Product Details </h2>
             <div>
-                <img ng-src="{{productInfo.ImagePath}}" alt="{{productInfo.Name}}" /><br />
-                <label><strong>{{productInfo.Name}}</strong></label><br />
-                <label>{{"Rs. "+productInfo.Price}}</label><label>{{" ("+productInfo.DiscountPercent+"% OFF) "}}</label>
-                <p>{{productInfo.Description}}</p>
-                <button class="btn btn-group-sm">Add to cart</button>
+                @*<img ng-src="{{productInfo.ImagePath}}" alt="{{productInfo.Name}}" /><br />
+                    <label><strong>{{productInfo.Name}}</strong></label><br />
+                    <label>{{"Rs. "+productInfo.Price}}</label><label>{{" ("+productInfo.DiscountPercent+"% OFF) "}}</label>
+                    <p>{{productInfo.Description}}</p>
+                    <button class="btn btn-group-sm">Add to cart</button>*@
+                <productdetails product="productInfo" showbtn="true" ></productdetails>
             </div>
+        </script>
+        <script type="text/ng-template" id="product.info.html">
+            <img ng-src="{{product.ImagePath}}" alt="{{product.Name}}" />
+            <br />
+            <label><strong>{{product.Name}}</strong></label>
+            <br />
+            <label>{{"Rs. "+product.Price}}</label>
+            <label>{{" ("+product.DiscountPercent+"% OFF) "}}</label>
+            <p>{{product.Description}}</p>
+            <button ng-click="AddToCart(product)" class="btn btn-group-sm" ng-if="ShowAdd">Add to cart</button>
         </script>
 
         <script type="text/ng-template" id="auth.login.html">

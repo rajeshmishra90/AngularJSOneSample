@@ -19,7 +19,10 @@ myApp.config(['$httpProvider', '$routeProvider', '$locationProvider', function (
     }).
     when('/Admin', {
         templateUrl: '/Admin/Index',
-        controller: "searchCtrl"
+        controller: "AdminCtrl"
+    }).
+    when('/About', {
+        templateUrl: '/Home/About'
     })
         .otherwise({
             redirectTo: '/home'
@@ -92,6 +95,50 @@ myApp.factory('myInterceptor', ['authService', '$injector', function (authServic
         }
     };
     return myInterceptor;
+}]);
+
+myApp.directive('productdetails', function () {
+    //define the directive object
+    var directive = {};
+
+    //restrict = E, signifies that directive is Element directive
+    directive.restrict = 'E';
+
+    //template replaces the complete element with its text.
+    directive.templateUrl = "product.info.html";
+
+    //scope is used to distinguish each student element based on criteria.
+    directive.scope = {
+        product: "=product",
+        showbtn: "@"
+    }
+
+    directive.controller = 'productInfoCtrl';
+
+    directive.compile = function (element, attributes) {
+        console.log(element);
+        //linkFunction is linked with each element with scope to get the element specific data.
+        var linkFunction = function ($scope, element, attributes) {
+            console.log(element.children());
+            angular.forEach(element.children(), function (value, key) {
+                if (value instanceof HTMLImageElement && $scope.showbtn == "false") {
+                    value.setAttribute("style", "height:200px; width:200px;");
+                }
+            });
+        }
+        return linkFunction;
+    }
+    return directive;
+})
+.controller('productInfoCtrl', ['$scope', function ($scope) {
+    if ($scope.showbtn == "true")
+        $scope.ShowAdd = true;
+    else
+        $scope.ShowAdd = false;
+
+    $scope.AddToCart = function (product) {
+        alert(product.Name + " added to cart.");
+    };
 }]);
 
 myApp.controller('authModalController', ['$http', '$scope', '$uibModalInstance', 'authService', function ($http, $scope, $uibModalInstance, authService) {
